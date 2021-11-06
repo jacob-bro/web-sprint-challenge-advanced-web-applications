@@ -2,16 +2,69 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Login = () => {
+
+const defaultVal = {
+    username: "",
+    password: ""
+  };
+        
+
+const [loginState, setloginState] = useState(defaultVal);
+const [err, setErr] = useState([]);
+
+  const inputChange = (e) => {
+    e.persist();
+    setloginState({ ...loginState, [e.target.name]: e.target.value });
+  };
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+    setloginState(defaultVal);
+  };
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+
+    <div>
+      <form onSubmit={formSubmit}>
+          <label htmlFor="username">
+            Username:</label>
+            <input
+              type="username"
+              placeholder="username"
+              id="username"
+              name="username"
+              value={loginState.username}
+              onChange={inputChange}
+            />
+          
+            <label htmlFor="password">
+            Password:</label>
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              name="password"
+              value={loginState.password}
+              onChange={inputChange}
+            />
+            
+          <p id="error">{`'**a server provided error message can be found in ${err.response.data}'`}</p>
+        
+        <button id="submit" type="submit">
+          Log In
+        </button>
+      </form>
+    </div>
         </ModalContainer>
     </ComponentContainer>);
 }
 
 export default Login;
+        
+          
 
 //Task List
 //1. Build login form DOM from scratch, making use of styled components if needed. Make sure the username input has id="username" and the password input as id="password".
