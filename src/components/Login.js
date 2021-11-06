@@ -1,13 +1,13 @@
+import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
-
-const Login = () => {
 
 const defaultVal = {
     username: "",
     password: ""
   };
-        
+
+const Login = () => {       
 
 const [loginState, setloginState] = useState(defaultVal);
 const [err, setErr] = useState([]);
@@ -19,6 +19,14 @@ const [err, setErr] = useState([]);
 
   const formSubmit = (e) => {
     e.preventDefault();
+    axios.post('http://localhost:5000/api/login', loginState)
+    .then(res =>{
+       localStorage.setItem('token', res.data.token);
+       history.push("/view");
+    })
+    .catch(err =>{
+      setErr(err)
+    })
     setloginState(defaultVal);
   };
     
@@ -51,7 +59,7 @@ const [err, setErr] = useState([]);
               onChange={inputChange}
             />
             
-          <p id="error">{`'**a server provided error message can be found in ${err.response.data}'`}</p>
+          <p id="error">{`${err.response.data}`}</p>
         
         <button id="submit" type="submit">
           Log In
@@ -68,8 +76,8 @@ export default Login;
 
 //Task List
 //1. Build login form DOM from scratch, making use of styled components if needed. Make sure the username input has id="username" and the password input as id="password".
-//2. Add in a p tag with the id="error" under the login form for use in error display.
-//3. Add in necessary local state to support login form and error display.
+//2. Add in a p tag="error" under the login form for use in error display.
+//3. Add in necessary local state to supp with the idort login form and error display.
 //4. When login form is submitted, make an http call to the login route. Save the auth token on a successful response and redirect to view page.
 //5. If the response is not successful, display an error statement. **a server provided error message can be found in ```err.response.data```**
 //6. MAKE SURE TO ADD id="username", id="password", id="error" AND id="submit" TO THE APPROPRIATE DOM ELEMENTS. YOUR AUTOTESTS WILL FAIL WITHOUT THEM.
