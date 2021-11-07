@@ -1,6 +1,18 @@
-
+import React, { useEffect, useState } from "react";
+import { fetcharticles } from "./fetch";
 
 const articleService = ()=> {
+    const {articles, setArticles} = useState([])
+
+    useEffect(() => {
+      fetcharticles()
+      .then((res) => {
+         setArticles(res.data);
+      })
+      .catch((err) => console.log(err));
+    }, [])
+
+    return(articles);
 }
 
 export default articleService;

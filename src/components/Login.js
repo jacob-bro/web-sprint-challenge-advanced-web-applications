@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
+import axiosWithAuth from '../utils/axiosWithAuth';
+import { useHistory } from 'react-router-dom';
 
 const defaultVal = {
     username: "",
@@ -8,7 +10,7 @@ const defaultVal = {
   };
 
 const Login = () => {       
-
+const { push } = useHistory();
 const [loginState, setloginState] = useState(defaultVal);
 const [err, setErr] = useState([]);
 
@@ -19,10 +21,10 @@ const [err, setErr] = useState([]);
 
   const formSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/login', loginState)
+    axiosWithAuth.post('http://localhost:5000/api/login', loginState)
     .then(res =>{
        localStorage.setItem('token', res.data.token);
-       history.push("/view");
+       push("/view");
     })
     .catch(err =>{
       setErr(err)
@@ -41,7 +43,7 @@ const [err, setErr] = useState([]);
             Username:</label>
             <input
               type="username"
-              placeholder="username"
+              placeholder="Username"
               id="username"
               name="username"
               value={loginState.username}
