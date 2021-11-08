@@ -1,10 +1,21 @@
 import React from 'react';
-import '@testing-library/jest-dom';
+import{ render, screen, waitFor } '@testing-library/jest-dom';
 
 import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
 
 import Article from './Article';
+import { render } from 'react-dom';
+
+
+test('renders component without errors', async ()=> {
+    render(<Article />);
+    await waitFor(() => {
+        const headline = screen.getById("headline");
+        expect(headline).toBeVisible;
+    })
+
+});
 
 test('renders component without errors', ()=> {
 });

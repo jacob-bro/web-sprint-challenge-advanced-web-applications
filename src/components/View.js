@@ -1,4 +1,5 @@
 import axios from 'axios';
+import e from 'cors';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -15,21 +16,23 @@ const View = (props) => {
     const [editId, setEditId] = useState();
     const { push } = useHistory();
 
-    const handleDelete = (id) => {
-        axios.delete(`http://localhost:5000/api/articles/:${id}`)
+    const handleDelete = (e, id) => {
+        e.preventDefault()
+        axiosWithAuth().delete(`http://localhost:5000/api/articles/:${id}`)
         .then(res => {
             setArticles(res.data);
-            push()
         })
-        .catch(err => err)
-    }
+        .catch(err => console.log(err))
+    };
 
     const handleEdit = (article) => {
        axiosWithAuth()
        .put(`/api/articles/:${editId}`, article)
-       .then()
-       .catch()
-    }
+       .then(res => {
+           setArticles(res.data)
+       })
+       .catch(err => console.log(err))
+    };
 
     const handleEditSelect = (id)=> {
         setEditing(true);
