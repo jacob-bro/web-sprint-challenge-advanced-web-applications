@@ -16,9 +16,8 @@ const View = (props) => {
     const [editId, setEditId] = useState();
     const { push } = useHistory();
 
-    const handleDelete = (e, id) => {
-        e.preventDefault()
-        axiosWithAuth().delete(`http://localhost:5000/api/articles/:${id}`)
+    const handleDelete = (id) => {
+        axiosWithAuth().delete(`http://localhost:5000/api/articles/${id}`)
         .then(res => {
             setArticles(res.data);
         })
@@ -27,7 +26,7 @@ const View = (props) => {
 
     const handleEdit = (article) => {
        axiosWithAuth()
-       .put(`/api/articles/:${editId}`, article)
+       .put(`http://localhost:5000/api/articles/${editId}`, article)
        .then(res => {
            setArticles(res.data)
        })

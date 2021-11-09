@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
+
 
 const defaultVal = {
     username: "",
@@ -12,7 +13,7 @@ const defaultVal = {
 const Login = () => {       
 const { push } = useHistory();
 const [loginState, setloginState] = useState(defaultVal);
-const [err, setErr] = useState([]);
+const [err, setErr] = useState("");
 
   const inputChange = (e) => {
     e.persist();
@@ -21,7 +22,7 @@ const [err, setErr] = useState([]);
 
   const formSubmit = (e) => {
     e.preventDefault();
-    axiosWithAuth.post('http://localhost:5000/api/login', loginState)
+    axiosWithAuth().post('http://localhost:5000/api/login', loginState)
     .then(res =>{
        localStorage.setItem('token', res.data.token);
        push("/view");
@@ -61,7 +62,7 @@ const [err, setErr] = useState([]);
               onChange={inputChange}
             />
             
-          <p id="error">{`${err.response.data}`}</p>
+          {err && <p id="error">{`${err.response.data}`}</p>}
         
         <button id="submit" type="submit">
           Log In
