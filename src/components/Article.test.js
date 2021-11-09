@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, waitFor } '@testing-library/jest-dom';
+import { waitFor } '@testing-library/jest-dom';
 import { fetcharticles as mockFetchArticles } from '../services/fetch';
-
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
 
